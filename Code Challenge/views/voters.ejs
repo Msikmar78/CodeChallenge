@@ -1,0 +1,82 @@
+<%- include('partials/header'); -%>
+
+<div class="container formContainer" style="max-width: 600px; margin-top: 300px;">
+    <div class="card card-register mx-auto mt-5">
+        <div class="card-header text-center"><h1>Voter Turnout</h1></div>
+        <div class="card-body">
+            <form class="d-flex justify-content-center">
+                <div class="form-group col-md-4 text-center">
+                    <label for="year"><h4>Year</h4></label>
+                    <select id="year" class="form-control">
+                      <option class="text-center" selected>1973</option>
+                      <option class="text-center">1976</option>
+                      <option class="text-center">1979</option>
+                      <option class="text-center">1982</option>
+                      <option class="text-center">1985</option>
+                      <option class="text-center">1988</option>
+                      <option class="text-center">1991</option>
+                      <option class="text-center">1994</option>
+                      <option class="text-center">1998</option>
+                      <option class="text-center">2002</option>
+                      <option class="text-center">2006</option>
+                      <option class="text-center">2010</option>
+                      <option class="text-center">2014</option>
+                      <option class="text-center">2018</option>
+                      <option class="text-center">2022</option>
+                      <option class="text-center">2026</option>
+                      <option class="text-center">2030</option>
+                      <option class="text-center">2034</option>
+                    </select>
+                    <button class="btn btn-primary btn-block bg-dark mt-3">Submit</button>
+                </div>
+            </form>
+            <div class="form-group text-center mt-5 mb-5">
+                <h1 id="region"></h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const form = document.querySelector('form');
+
+    window.addEventListener("load", async function(){
+        const form = document.querySelector('form');
+        var year = form.year.value;
+
+        try {
+            const res = await fetch('/voters', {
+                method: 'POST',
+                body: JSON.stringify({year}),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            var data = await res.json();
+            
+            document.getElementById("region").innerHTML = year + " - " + data.region + " - " + data.maxValue + "%";
+        }
+        catch (err) {
+            console.log(err);
+        }
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        var year = form.year.value;
+       
+        try {
+            const res = await fetch('/voters', {
+                method: 'POST',
+                body: JSON.stringify({year}),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            var data = await res.json();
+            document.getElementById("region").innerHTML = year + " - " + data.region + " - " + data.maxValue + "%";
+        }
+        catch (err) {
+            console.log(err);
+        }
+    });
+</script>
+
+<%- include('partials/footer'); -%>

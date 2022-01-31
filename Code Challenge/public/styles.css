@@ -1,0 +1,12 @@
+nav {
+  background-color: #0E0D0A !important;
+  opacity: 80%;
+}
+footer {
+  margin-top: 300px;
+  background-color: #0E0D0A !important;
+  min-height: 300px;
+}
+.banner img {
+  width: 100%;
+}
